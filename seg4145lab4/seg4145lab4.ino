@@ -32,11 +32,11 @@ SoftwareSerial LCD = SoftwareSerial(0, LCD_PIN); // The LCD display.
 Servo sensorServo;
 
 WIFI_PROFILE wireless_prof = {
- /* SSID */ "Stingray",
- /* WPA/WPA2 passphrase */ "",
- /* Robot IP address */ "10.136.160.24",
+ /* SSID */ "stingray",
+ /* WPA/WPA2 passphrase */ "12345678",
+ /* Robot IP address */ "192.168.1.110",
  /* subnet mask */ "255.255.255.0",
- /* Gateway IP */ "10.136.160.1", };
+ /* Gateway IP */ "192.168.1.1", };
  
 String remote_server = "192.168.1.145"; // peer device IP address.
 
@@ -64,6 +64,7 @@ void setup() { //stingray
   intrTemperatureSetup();
   contMessagesSetup();
 
+ 
   // Startup Messge
   procStartupMessageSetup();
   displayStartupMessage();
@@ -73,14 +74,18 @@ void setup() { //stingray
   delay(1000);
   sensorServo.detach();
 
+  Serial.println("Starting Wifi...");
   // connect to AP
   Wireless.begin(&wireless_prof);
+  Serial.println("Wifi Connected");
+  
+ //Serial.println("client.connect() = "+ client.connect());
 
   // if you get a connection, report back via serial. client.connect() connect to the IP address and port specified earlier. It returns true if the connection succeeds, false if not.
   if (client.connect()) {
     Serial.println("connected"); // prints to serial monitor. Check the Serial Monitor Section at the end of  this manual.
     // Send message over UDP socket to peer device
-    client.println("aBcDe"); //Your own message
+    client.println("Robot10"); //Your own message
   }
   else {
     // if connection setup failed:
@@ -104,7 +109,7 @@ void loop() {
  while (client.available()) {
   int in;
   while ((in = client.read()) == -1);
-    Serial.print((char)in);
+    Serial.println((char)in);
 
     if((char)in == '1'){
       Serial.print("1 - Move the robot forward");

@@ -71,8 +71,8 @@ void intrMotorSetup(){
     pinMode(LEFT_MOTOR_PIN, OUTPUT);
     pinMode(RIGHT_MOTOR_PIN, OUTPUT);
 
-    attachLeftMotorServo();
-    attachRightMotorServo();
+    //attachLeftMotorServo();
+    //attachRightMotorServo();
     
     INTR_MOTOR_SETUP = true;
   }
