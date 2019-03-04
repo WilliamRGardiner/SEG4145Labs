@@ -14,6 +14,7 @@ public class Command {
 	private List<String> parameterValues;
 	private List<String> parameterNames;
 	private String description;
+	private String message;
 	
 	public static class Builder {
 		
@@ -55,21 +56,12 @@ public class Command {
 		return description;
 	}
 	
-	public Command init() {
-		Scanner scanner = new Scanner(System.in);
-		for(String paramName : parameterNames) {
-			System.out.printf("Please enter %s: ", paramName);
-			parameterValues.add(scanner.next());
-		}
-		scanner.close();
-		return this;
-	}
-	
-	public String toString() {
+	public Command init(Scanner scanner) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder = stringBuilder.append(main);
 		if(parameterValues.size() == 0 && parameterNames.size() == 0) {
-			return stringBuilder.append(TERMINATOR).toString();
+			message = stringBuilder.append(TERMINATOR).toString();
+			return this;
 		} else {
 			stringBuilder = stringBuilder.append(MAIN_SEPERATOR);
 		}
@@ -78,7 +70,17 @@ public class Command {
 			stringBuilder = stringBuilder.append(param).append(PARAM_SEPERATOR);
 		}
 		
+		for(String paramName : parameterNames) {
+			System.out.printf("Please enter %s: ", paramName);
+			stringBuilder.append(scanner.next()).append(PARAM_SEPERATOR);
+		}
+		
 		stringBuilder.delete(stringBuilder.length() - PARAM_SEPERATOR.length(), stringBuilder.length());
-		return stringBuilder.append(TERMINATOR).toString();
+		message = stringBuilder.append(TERMINATOR).toString();
+		return this;
+	}
+	
+	public String toString() {
+		return message;
 	}
 }

@@ -17,41 +17,49 @@ public class StingrayCommandTerminal {
 	private static int PORT = 9876;
 	
 	public static void main(String[] args) {
+		System.out.println("Starting...");
 		MessageWriter writer = null;
 		try {
+			System.out.printf("Establishing Connection... ");
 			Connection connection = new Connection(PORT).connect();
+			System.out.println("Done!");
+			System.out.printf("Initializing Writer... ");
 			writer = new WifiMessageWriter(connection).init();
+			System.out.println("Done!");
 		} catch (IOException e1) {
 			System.out.println("Init Failed");
 		}
-//		Reader reader = new WifiReader(connection);
+		
+		System.out.println("Ready!");
+		
+		List<Command> commands = new ArrayList<Command>();
+		commands.add(new Command.Builder("move", "Move the robot forward.")
+				.addParameterValue("forward")
+				.addParameterName("distance (cm)")
+				.build());
+		commands.add(new Command.Builder("move", "Move the robot backward.")
+				.addParameterValue("backward")
+				.addParameterName("distance (cm)")
+				.build());
+		commands.add(new Command.Builder("rotate", "Rotate the robot clockwise.")
+				.addParameterValue("cw")
+				.addParameterName("degrees")
+				.build());
+		commands.add(new Command.Builder("rotate", "Rotate the robot counter clockwise.")
+				.addParameterValue("ccw")
+				.addParameterName("degrees")
+				.build());
+		commands.add(new Command.Builder("read", "Read the distance to the nearest object.")
+				.addParameterValue("distance")
+				.build());
+		commands.add(new Command.Builder("read", "Read the Temperature.")
+				.addParameterValue("temperature")
+				.build());
+		Command quit = new Command.Builder("quit", "Quit!").build();
+		commands.add(quit);
+		LocalReader commandReader = new CommandReader(commands.toArray(new Command[commands.size()]));
+		
 		for(;;) {
-			List<Command> commands = new ArrayList<Command>();
-			commands.add(new Command.Builder("move", "Move the robot forward.")
-					.addParameterValue("forward")
-					.addParameterName("distance (cm)")
-					.build());
-			commands.add(new Command.Builder("move", "Move the robot backward.")
-					.addParameterValue("backward")
-					.addParameterName("distance (cm)")
-					.build());
-			commands.add(new Command.Builder("rotate", "Rotate the robot clockwise.")
-					.addParameterValue("cw")
-					.addParameterName("degrees")
-					.build());
-			commands.add(new Command.Builder("rotate", "Rotate the robot counter clockwise.")
-					.addParameterValue("ccw")
-					.addParameterName("degrees")
-					.build());
-			commands.add(new Command.Builder("read", "Read the distance to the nearest object.")
-					.addParameterValue("distance")
-					.build());
-			commands.add(new Command.Builder("read", "Read the Temperature.")
-					.addParameterValue("temperature")
-					.build());
-			Command quit = new Command.Builder("quit", "Quit!").build();
-			commands.add(quit);
-			LocalReader commandReader = new CommandReader(commands.toArray(new Command[commands.size()]));
 			
 			Command command;
 			try {
@@ -68,11 +76,10 @@ public class StingrayCommandTerminal {
 				break;
 			}
 			
-			// Uncomment when ready to read.
-			// reader.readNext(new ConsoleWriterCallback());
-			
-			
 		}
+		System.out.printf("Closing... ");
+		commandReader.close();
+		System.out.println("Done!");
 		
 	}
 	
