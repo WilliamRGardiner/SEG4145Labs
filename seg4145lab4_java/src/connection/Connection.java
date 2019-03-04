@@ -15,9 +15,10 @@ public class Connection {
 		this.reciever = null;
 	}
 	
-	public void connect() throws IOException {
+	public Connection connect() throws IOException {
 		reciever = new ServerSocket(port);
 		sender = reciever.accept();
+		return this;
 	}
 	
 	public boolean isConnected() {

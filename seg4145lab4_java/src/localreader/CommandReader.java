@@ -19,7 +19,7 @@ public class CommandReader implements LocalReader<Command> {
 		try {
 			ConcurrencyHelper.consoleSemaphore.acquire();
 			for(int i = 0; i < commands.length; i++) {
-				System.out.printf("%d - %s", i+1, commands[i].getDescription());
+				System.out.printf("%d - %s\n", i+1, commands[i].getDescription());
 			}
 			System.out.print("Please enter a command: ");
 			

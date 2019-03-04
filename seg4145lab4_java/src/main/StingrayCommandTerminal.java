@@ -1,5 +1,6 @@
 package main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +17,13 @@ public class StingrayCommandTerminal {
 	private static int PORT = 9876;
 	
 	public static void main(String[] args) {
-		Connection connection = new Connection(PORT);
-		MessageWriter writer = new WifiMessageWriter(connection);
+		MessageWriter writer = null;
+		try {
+			Connection connection = new Connection(PORT).connect();
+			writer = new WifiMessageWriter(connection).init();
+		} catch (IOException e1) {
+			System.out.println("Init Failed");
+		}
 //		Reader reader = new WifiReader(connection);
 		for(;;) {
 			List<Command> commands = new ArrayList<Command>();
