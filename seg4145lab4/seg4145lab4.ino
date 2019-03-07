@@ -57,6 +57,8 @@ WifiClient client(remote_server, remote_port, PROTO_UDP);
 *****************************************************************************/
 void setup() { //stingray
 
+
+
  Serial.begin(9600);
 
   intrMotorSetup();
@@ -106,53 +108,101 @@ void setup() { //stingray
 *****************************************************************************/
 void loop() {
 // if there are incoming bytes available from the peer device, read them and print them:
+  bool receivedCommand = false;
  while (client.available()) {
   int in;
-  while ((in = client.read()) == -1);
+  char array[25];
+  
+ 
+
+  int index = 0;
+  while ((in = client.read()) == -1){
     Serial.println((char)in);
-
-    if((char)in == '1'){
-      Serial.print("1 - Move the robot forward");
-      attachLeftMotorServo();
-      attachRightMotorServo();
-      moveForward(10);
-    }
-    else if((char)in == '2'){
-      Serial.print("2 - Move the robot backward");
-      attachLeftMotorServo();
-      attachRightMotorServo();
-      moveBackward(10);
-    }
-    else if((char)in == '3'){
-      Serial.print("3 - Rotate the robot clockwise");
-       attachLeftMotorServo();
-       attachRightMotorServo();
-       turnRight(20);
-    }
-    else if((char)in == '4'){
-       Serial.print("4 - Rotate the robot counter clockwise");
-       attachLeftMotorServo();
-       attachRightMotorServo();
-       turnLeft(20);
-    }
-    else if((char)in == '5'){
-      Serial.print("5 - Read the distance to the nearest object");
-      
-    }
-    else if((char)in == '6'){
-      Serial.print("6 - Read temperature values");
-      displayTemperature(readTemp());
-
-    }
-    else if((char)in == '6'){
-      Serial.print("7 - Quit");
-      stopMovement();
+    
+    if((char)in == '.'){
+      receivedCommand=true;
+      break;
     }
     else{
-      Serial.print("Invalid Operation: "+ (char)in);
-      
+    array[index] = (char)in;  
     }
- }
- 
+    
+    index++;
+  }  
+
+  
+if(receivedCommand){
+  String one = "";
+  String two = "";
+  String three = "";
+  
+  int index2 = 0;
+  while(array[index2] != ":"){
+    one+= array[index2];
+    index2++;
+  }
+  
+  while(array[index2] != ":" ||array[index2] != "."){
+    two+= array[index2];
+    index2++;
+  }
+
+  if(one == "move"){
+        while(array[index2] != "."){
+          three+= array[index2];
+          index2++;
+        }
+        
+        if(two == "forward"){
+          Serial.print("Move the robot forward");
+          attachLeftMotorServo();
+          attachRightMotorServo();
+          moveForward(three.toFloat());
+        }
+        else if(two = "backward"){
+          Serial.print("Move the robot backward");
+          attachLeftMotorServo();
+          attachRightMotorServo();
+          moveBackward(three.toFloat());
+        }
+  }
+  else if(one == "rotate"){
+      while(array[index2] != "."){
+        three+= array[index2];
+        index2++;
+      }
+    
+      if(two == "cw"){
+        Serial.print("Rotate the robot clockwise");
+        attachLeftMotorServo();
+        attachRightMotorServo();
+        turnRight(three.toFloat());
+      }
+      else if(two == "ccw"){
+        Serial.print("Rotate the robot counter clockwise");
+        attachLeftMotorServo();
+        attachRightMotorServo();
+        turnLeft(three.toFloat());
+      }
+  }
+  else if(one == "read"){
+      if(two == "temperature"){
+        Serial.print("6 - Read temperature values");
+        displayTemperature(readTemp());
+      }
+      else if(two == "distance"){
+        Serial.print("Read the distance to the nearest object");
+      }
+  }
+  else if(one == "quit"){
+      Serial.print("Quit");
+      stopMovement();
+  }
+  else{
+      Serial.print("Invalid Operation");
+  }
+
+}
  delay(1);
+}
 }
