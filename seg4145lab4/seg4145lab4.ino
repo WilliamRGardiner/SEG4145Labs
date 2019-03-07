@@ -38,12 +38,12 @@ WIFI_PROFILE wireless_prof = {
  /* subnet mask */ "255.255.255.0",
  /* Gateway IP */ "192.168.1.1", };
  
-String remote_server = "192.168.1.145"; // peer device IP address.
+String remote_server = "192.168.1.140"; // peer device IP address.
 
 String remote_port = "9876"; // arbitrary 
 
 //Creates a client that can connect to a specified internet IP address and port number
-WifiClient client(remote_server, remote_port, PROTO_UDP);
+WifiClient client(remote_server, remote_port, PROTO_TCP);
 
 /******************************************************************************
 * setup
@@ -187,7 +187,7 @@ if(receivedCommand){
   }
   else if(one == "read"){
       if(two == "temperature"){
-        Serial.print("6 - Read temperature values");
+        Serial.print("Read temperature values");
         displayTemperature(readTemp());
       }
       else if(two == "distance"){
