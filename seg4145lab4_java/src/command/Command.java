@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class Command {
 
-	private static final String MAIN_SEPERATOR = ": ";
-	private static final String PARAM_SEPERATOR = ", ";
+	private static final String MAIN_SEPERATOR = ":";
+	private static final String PARAM_SEPERATOR = ",";
 	private static final String TERMINATOR = ".";
 	
 	private String main;
