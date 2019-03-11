@@ -25,6 +25,8 @@
 #include "proc_obstacle_avoidance.h"
 #include "intr_temperature.h"
 #include "cont_movement.h"
+#include "intr_proximity_sensor.h"
+
 
 
 // Global Variables
@@ -34,7 +36,7 @@ Servo sensorServo;
 WIFI_PROFILE wireless_prof = {
  /* SSID */ "stingray",
  /* WPA/WPA2 passphrase */ "12345678",
- /* Robot IP address */ "192.168.1.110",
+ /* Robot IP address */ "192.168.1.141",
  /* subnet mask */ "255.255.255.0",
  /* Gateway IP */ "192.168.1.1", };
  
@@ -119,7 +121,7 @@ void loop() {
   while ((in = client.read()) == -1){}
     Serial.println((char)in);
     
-    if((char)in == '.'){
+    if((char)in == '\n'){
       array[index] = (char)in; 
       receivedCommand=true;
       break;
@@ -167,7 +169,7 @@ if(receivedCommand){
           Serial.println("Command: Move the robot forward");
           attachLeftMotorServo();
           attachRightMotorServo();
-          moveForward(three.toFloat());
+          moveForward(three.toFloat()*50);
           receivedCommand=false;
 
         }
@@ -175,7 +177,7 @@ if(receivedCommand){
           Serial.println("Command: Move the robot backward");
           attachLeftMotorServo();
           attachRightMotorServo();
-          moveBackward(three.toFloat());
+          moveBackward(three.toFloat()*50);
           receivedCommand=false;
 
         }
@@ -191,7 +193,7 @@ if(receivedCommand){
         Serial.println("Command: Rotate the robot clockwise");
         attachLeftMotorServo();
         attachRightMotorServo();
-        turnRight(three.toFloat());
+        turnRight(three.toFloat()/360);
         receivedCommand=false;
 
       }
@@ -199,7 +201,7 @@ if(receivedCommand){
         Serial.println("Command: Rotate the robot counter clockwise");
         attachLeftMotorServo();
         attachRightMotorServo();
-        turnLeft(three.toFloat());
+        turnLeft(three.toFloat()/360);
         receivedCommand=false;
 
       }
