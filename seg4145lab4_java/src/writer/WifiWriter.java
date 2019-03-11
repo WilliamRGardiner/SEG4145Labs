@@ -29,6 +29,6 @@ public class WifiWriter implements Writer {
 	
 	@Override
 	public void write(String msg) {
-		writer.println(msg);
+		writer.print(msg);
 	}
 }
