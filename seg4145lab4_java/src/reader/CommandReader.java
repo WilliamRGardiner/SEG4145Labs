@@ -1,9 +1,15 @@
-package localreader;
+package reader;
 import java.util.Scanner;
 
 import command.Command;
 
-public class CommandReader implements LocalReader<Command> {
+/**
+ * Reads commands from the user.
+ * 
+ * @author William Gardiner (7267012)
+ *
+ */
+public class CommandReader implements Reader<Command> {
 
 	private Command[] commands;
 	private Scanner scanner;
@@ -26,7 +32,8 @@ public class CommandReader implements LocalReader<Command> {
 			throw new ReadException(new IllegalArgumentException("Invalid command key"));
 		}
 	}
-
+	
+	@Override
 	public void close() {
 		scanner.close();
 	}

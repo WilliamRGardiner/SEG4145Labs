@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Stores command information including the base instruction and parameter values.
+ * Gathers unknown parameter values and generates the command string to send.
+ * 
+ * @author William Gardiner (7267012)
+ */
 public class Command {
 
 	private static final String MAIN_SEPERATOR = ":";
@@ -16,6 +22,11 @@ public class Command {
 	private String description;
 	private String message;
 	
+	/**
+	 * Builder for the command. Builder pattern makes creating parameter lists easier.
+	 * 
+	 * @author William Gardiner (7267012)
+	 */
 	public static class Builder {
 		
 		private String main;
@@ -56,6 +67,12 @@ public class Command {
 		return description;
 	}
 	
+	/**
+	 * Reads unknown parameter values from the user.
+	 * 
+	 * @param scanner the scanner.
+	 * @return
+	 */
 	public Command init(Scanner scanner) {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder = stringBuilder.append(main);

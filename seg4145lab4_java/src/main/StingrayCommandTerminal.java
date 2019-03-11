@@ -6,25 +6,36 @@ import java.util.List;
 
 import command.Command;
 import connection.Connection;
-import localreader.CommandReader;
-import localreader.LocalReader;
-import localreader.ReadException;
-import writer.MessageWriter;
-import writer.WifiMessageWriter;
+import reader.CommandReader;
+import reader.Reader;
+import reader.ReadException;
+import writer.Writer;
+import writer.WifiWriter;
 
+/**
+ * The main class.
+ * 
+ * @author William Gardiner (7267012)
+ *
+ */
 public class StingrayCommandTerminal {
 
 	private static int PORT = 9876;
 	
+	/**
+	 * Get input from user and send it to the stingray.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		System.out.println("Starting...");
-		MessageWriter writer = null;
+		Writer writer = null;
 		try {
 			System.out.printf("Establishing Connection... ");
 			Connection connection = new Connection(PORT).connect();
 			System.out.println("Done!");
 			System.out.printf("Initializing Writer... ");
-			writer = new WifiMessageWriter(connection).init();
+			writer = new WifiWriter(connection).init();
 			System.out.println("Done!");
 		} catch (IOException e1) {
 			System.out.println("Init Failed");
@@ -57,7 +68,7 @@ public class StingrayCommandTerminal {
 				.build());
 		Command quit = new Command.Builder("quit", "Quit!").build();
 		commands.add(quit);
-		LocalReader commandReader = new CommandReader(commands.toArray(new Command[commands.size()]));
+		Reader<Command> commandReader = new CommandReader(commands.toArray(new Command[commands.size()]));
 		
 		for(;;) {
 			
