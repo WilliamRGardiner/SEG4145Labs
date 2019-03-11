@@ -9,12 +9,12 @@ import connection.Connection;
  * 
  * @author William Gardiner (7267012)
  */
-public class WifiMessageWriter implements MessageWriter {
+public class WifiWriter implements Writer {
 
 	private Connection connection;
 	private PrintWriter writer;
 	
-	public WifiMessageWriter(Connection connection) {
+	public WifiWriter(Connection connection) {
 		this.connection = connection;
 		this.writer = null;
 	}
@@ -22,7 +22,7 @@ public class WifiMessageWriter implements MessageWriter {
 	/*
 	 * Initializes the stream.
 	 */
-	public WifiMessageWriter init() throws IOException {
+	public WifiWriter init() throws IOException {
 		writer = new PrintWriter(connection.getSender().getOutputStream(), true);
 		return this;
 	}

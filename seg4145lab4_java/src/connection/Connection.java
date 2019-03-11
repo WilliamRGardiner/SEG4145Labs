@@ -13,12 +13,12 @@ public class Connection {
 
 	private int port;
 	private Socket sender;
-	private ServerSocket reciever;
+	private ServerSocket receiver;
 	
 	public Connection(int port) {
 		this.port = port;
 		this.sender = null;
-		this.reciever = null;
+		this.receiver = null;
 	}
 	
 	/**
@@ -28,8 +28,8 @@ public class Connection {
 	 * @throws IOException
 	 */
 	public Connection connect() throws IOException {
-		reciever = new ServerSocket(port);
-		sender = reciever.accept();
+		receiver = new ServerSocket(port);
+		sender = receiver.accept();
 		return this;
 	}
 	
@@ -42,7 +42,7 @@ public class Connection {
 	}
 
 	public ServerSocket getReciever() {
-		return reciever;
+		return receiver;
 	}
 	
 }

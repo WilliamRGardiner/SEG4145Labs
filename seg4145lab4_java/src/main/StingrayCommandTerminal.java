@@ -9,8 +9,8 @@ import connection.Connection;
 import reader.CommandReader;
 import reader.Reader;
 import reader.ReadException;
-import writer.MessageWriter;
-import writer.WifiMessageWriter;
+import writer.Writer;
+import writer.WifiWriter;
 
 /**
  * The main class.
@@ -29,13 +29,13 @@ public class StingrayCommandTerminal {
 	 */
 	public static void main(String[] args) {
 		System.out.println("Starting...");
-		MessageWriter writer = null;
+		Writer writer = null;
 		try {
 			System.out.printf("Establishing Connection... ");
 			Connection connection = new Connection(PORT).connect();
 			System.out.println("Done!");
 			System.out.printf("Initializing Writer... ");
-			writer = new WifiMessageWriter(connection).init();
+			writer = new WifiWriter(connection).init();
 			System.out.println("Done!");
 		} catch (IOException e1) {
 			System.out.println("Init Failed");
