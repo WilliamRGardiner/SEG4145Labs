@@ -4,6 +4,11 @@ import java.io.PrintWriter;
 
 import connection.Connection;
 
+/**
+ * Writes messages to Wifi.
+ * 
+ * @author William Gardiner (7267012)
+ */
 public class WifiMessageWriter implements MessageWriter {
 
 	private Connection connection;
@@ -14,6 +19,9 @@ public class WifiMessageWriter implements MessageWriter {
 		this.writer = null;
 	}
 	
+	/*
+	 * Initializes the stream.
+	 */
 	public WifiMessageWriter init() throws IOException {
 		writer = new PrintWriter(connection.getSender().getOutputStream(), true);
 		return this;

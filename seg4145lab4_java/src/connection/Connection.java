@@ -3,6 +3,12 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Stores information about the connection.
+ * 
+ * @author William Gardiner (7267012)
+ *
+ */
 public class Connection {
 
 	private int port;
@@ -15,6 +21,12 @@ public class Connection {
 		this.reciever = null;
 	}
 	
+	/**
+	 * Initializes the connection.
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	public Connection connect() throws IOException {
 		reciever = new ServerSocket(port);
 		sender = reciever.accept();
