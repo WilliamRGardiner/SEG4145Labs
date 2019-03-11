@@ -38,9 +38,9 @@ WIFI_PROFILE wireless_prof = {
  /* subnet mask */ "255.255.255.0",
  /* Gateway IP */ "192.168.1.1", };
  
-String remote_server = "192.168.1.140"; // peer device IP address.
+String remote_server = "192.168.1.177"; // peer device IP address.
 
-String remote_port = "9876"; // arbitrary 
+String remote_port = "4242"; // arbitrary 
 
 //Creates a client that can connect to a specified internet IP address and port number
 WifiClient client(remote_server, remote_port, PROTO_TCP);
@@ -79,7 +79,6 @@ void setup() { //stingray
   Serial.println("Starting Wifi...");
   // connect to AP
   Wireless.begin(&wireless_prof);
-  Serial.println("Wifi Connected");
   
  //Serial.println("client.connect() = "+ client.connect());
 
@@ -116,10 +115,12 @@ void loop() {
  
 
   int index = 0;
-  while ((in = client.read()) == -1){
+  while(!receivedCommand){
+  while ((in = client.read()) == -1){}
     Serial.println((char)in);
     
     if((char)in == '.'){
+      array[index] = (char)in; 
       receivedCommand=true;
       break;
     }
@@ -128,78 +129,104 @@ void loop() {
     }
     
     index++;
-  }  
+  } 
 
-  
+
 if(receivedCommand){
+  Serial.println("Received Command");
   String one = "";
   String two = "";
   String three = "";
   
   int index2 = 0;
-  while(array[index2] != ":"){
-    one+= array[index2];
-    index2++;
+  while(array[index2] != ':'){
+    one+= array[index2]; 
+    index2++; 
   }
+
+  Serial.println("one:" + one);
+  index2++;
   
-  while(array[index2] != ":" ||array[index2] != "."){
+  while(array[index2] != ',' && array[index2] != '.'){
     two+= array[index2];
     index2++;
   }
 
+    Serial.println("two:" + two);
+
+
   if(one == "move"){
-        while(array[index2] != "."){
+        index2++;
+        while(array[index2] != '.'){
           three+= array[index2];
           index2++;
         }
-        
+        Serial.println("three:" + three);
+
         if(two == "forward"){
-          Serial.print("Move the robot forward");
+          Serial.println("Command: Move the robot forward");
           attachLeftMotorServo();
           attachRightMotorServo();
           moveForward(three.toFloat());
+          receivedCommand=false;
+
         }
         else if(two = "backward"){
-          Serial.print("Move the robot backward");
+          Serial.println("Command: Move the robot backward");
           attachLeftMotorServo();
           attachRightMotorServo();
           moveBackward(three.toFloat());
+          receivedCommand=false;
+
         }
   }
   else if(one == "rotate"){
-      while(array[index2] != "."){
+      index2++;
+      while(array[index2] != '.'){
         three+= array[index2];
         index2++;
       }
     
       if(two == "cw"){
-        Serial.print("Rotate the robot clockwise");
+        Serial.println("Command: Rotate the robot clockwise");
         attachLeftMotorServo();
         attachRightMotorServo();
         turnRight(three.toFloat());
+        receivedCommand=false;
+
       }
       else if(two == "ccw"){
-        Serial.print("Rotate the robot counter clockwise");
+        Serial.println("Command: Rotate the robot counter clockwise");
         attachLeftMotorServo();
         attachRightMotorServo();
         turnLeft(three.toFloat());
+        receivedCommand=false;
+
       }
   }
   else if(one == "read"){
       if(two == "temperature"){
-        Serial.print("Read temperature values");
+        Serial.println("Command: Read temperature values");
         displayTemperature(readTemp());
+        receivedCommand=false;
+
       }
       else if(two == "distance"){
-        Serial.print("Read the distance to the nearest object");
+        Serial.println("Command: Read the distance to the nearest object");
+        receivedCommand=false;
+
       }
   }
   else if(one == "quit"){
-      Serial.print("Quit");
+      Serial.println("Command Quit");
       stopMovement();
+      receivedCommand=false;
+
   }
   else{
       Serial.print("Invalid Operation");
+      receivedCommand=false;
+
   }
 
 }
