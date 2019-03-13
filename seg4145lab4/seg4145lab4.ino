@@ -207,12 +207,13 @@ if(receivedCommand){
   else if(one == "read"){
       if(two == "temperature"){
         Serial.println("Command: Read temperature values");
-        displayTemperature(readTemp());
+        displayNumber("Temperature", readTemp());
         receivedCommand=false;
 
       }
       else if(two == "distance"){
         Serial.println("Command: Read the distance to the nearest object");
+        displayNumber("Distance", getDistanceToObstacle());
         receivedCommand=false;
 
       }
@@ -232,4 +233,10 @@ if(receivedCommand){
 }
  delay(1);
 }
+}
+
+void displayNumber(const char* string, float number) {
+  char buff[10];
+  dtostrf(number, 4, 2, buff);
+  displayMessage(string, buff, 5);
 }
