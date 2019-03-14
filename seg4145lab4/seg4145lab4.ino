@@ -67,6 +67,7 @@ void setup() { //stingray
   contMovementSetup();
   intrTemperatureSetup();
   contMessagesSetup();
+  intrProximitySensorSetup();
 
  
   // Startup Messge
@@ -215,6 +216,7 @@ if(receivedCommand){
       }
       else if(two == "distance"){
         Serial.println("Command: Read the distance to the nearest object");
+        displayDistance(getDistanceToObstacle());
         receivedCommand=false;
 
       }

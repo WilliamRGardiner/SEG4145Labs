@@ -41,4 +41,10 @@ float getDistanceToObstacle() {
     return distance;
 }
 
+void displayDistance(float distance) {
+  char buff[10];
+  dtostrf(distance, 4, 2, buff);
+  displayMessage("Distance", buff, 5);
+}
+
 #endif
