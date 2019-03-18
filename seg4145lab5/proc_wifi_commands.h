@@ -123,13 +123,14 @@ void readCommands() {
         if(two == "temperature"){
           Serial.println("Command: Read temperature values");
           displayTemperature(readTemp());
-          client.println(readTemp()); //Your own message
+          client.println(readTemp());
           receivedCommand=false;
   
         }
         else if(two == "distance"){
           Serial.println("Command: Read the distance to the nearest object");
           displayDistance(getDistanceToObstacle());
+          client.println(getDistanceToObstacle());
           receivedCommand=false;
   
         }
