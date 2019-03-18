@@ -6,6 +6,7 @@ import seg4145lab5_java.controller.ApplicationController;
 import seg4145lab5_java.model.ApplicationModel;
 import seg4145lab5_java.utils.CommunicationUnit;
 import seg4145lab5_java.utils.WifiCommunicationUnit;
+import seg4145lab5_java.utils.WindowCloser;
 import seg4145lab5_java.utils.connection.Connection;
 import seg4145lab5_java.view.ApplicationFrame;
 
@@ -17,6 +18,7 @@ public class StingrayController {
 		ApplicationModel model = new ApplicationModel();
 
 		view = new ApplicationFrame(model);
+		view.addWindowListener(new WindowCloser());
 		view.setVisible(true);
 
 		model.pushToConsole("Starting up...");
