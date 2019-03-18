@@ -20,7 +20,7 @@ import writer.WifiWriter;
  */
 public class StingrayCommandTerminal {
 
-	private static int PORT = 9876;
+	private static int PORT = 4242;
 	
 	/**
 	 * Get input from user and send it to the stingray.
