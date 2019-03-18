@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
 import seg4145lab5_java.controller.ApplicationController;
-import seg4145lab5_java.controller.ButtonListener;
+import seg4145lab5_java.controller.listener.ButtonListener;
 
 public class ButtonPanel extends JPanel {
 

@@ -12,7 +12,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
-import seg4145lab5_java.controller.TextFieldListener;
+import seg4145lab5_java.controller.listener.TextFieldListener;
 import seg4145lab5_java.model.ApplicationModel;
 
 public class ParameterPanel extends JPanel {

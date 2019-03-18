@@ -40,7 +40,7 @@ public class MockStingray {
 		    if(!"quit!".equals(buffer.toString())) {
 		    	System.out.print(buffer);
 		    	System.out.print("\n");
-		    	out.write(buffer);
+		    	out.println("10.0");
 		    	echoCommand();
 		    }
 		} catch (Exception e) {
