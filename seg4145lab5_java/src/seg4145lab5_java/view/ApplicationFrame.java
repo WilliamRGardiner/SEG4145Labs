@@ -14,7 +14,7 @@ public class ApplicationFrame extends JFrame {
 	private MainPanel panel;
 	
 	public ApplicationFrame(ApplicationModel model) {
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		setSize(new Dimension(440, 320));
 		setResizable(false);
 		panel = new MainPanel(this, model);

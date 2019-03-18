@@ -12,6 +12,7 @@ import seg4145lab5_java.view.ApplicationFrame;
 
 public class StingrayController {
 	private static ApplicationFrame view;
+	private static ApplicationController controller;
 	
 	public static void main(String[] args) {
 		
@@ -33,7 +34,8 @@ public class StingrayController {
 		}
 		
 		model.pushToConsole("Connected!");
-		view.addController(new ApplicationController(model, comms));
+		controller = new ApplicationController(model, comms);
+		view.addController(controller);
 
 		model.pushToConsole("Ready!");
 	}
@@ -43,6 +45,7 @@ public class StingrayController {
 	}
 
 	public static void quit() {
+		controller.quit();
 		view.dispose();
 		System.exit(0);
 	}

@@ -103,8 +103,6 @@ public class ApplicationController {
 	public void quit() {
 		Command command = new Command("quit");
 		comms.write(command.toString());
-		model.pushToConsole("Sent: " + command.toString());
-		StingrayController.quit();
 	}
 
 }

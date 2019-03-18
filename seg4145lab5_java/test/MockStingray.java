@@ -10,7 +10,6 @@ public class MockStingray {
 	private static final int PORT = 9876; 
 	private static Socket echoSocket;
 	
-	
 	public static void main(String[] args) {
 		try {
 			echoSocket = new Socket(HOSTNAME, PORT);
@@ -37,9 +36,9 @@ public class MockStingray {
 		    
 		    char[] buffer = new char[20];
 		    in.read(buffer);
-		    if(!"quit!".equals(buffer.toString())) {
-		    	System.out.print(buffer);
-		    	System.out.print("\n");
+	    	System.out.print(buffer);
+	    	System.out.print("\n");
+		    if(!"quit.".equals(buffer.toString())) {
 		    	out.println("10.0");
 		    	echoCommand();
 		    }
