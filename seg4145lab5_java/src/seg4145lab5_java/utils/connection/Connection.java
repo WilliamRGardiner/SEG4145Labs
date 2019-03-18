@@ -1,4 +1,4 @@
-package connection;
+package seg4145lab5_java.utils.connection;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,13 +12,13 @@ import java.net.Socket;
 public class Connection {
 
 	private int port;
-	private Socket sender;
-	private ServerSocket receiver;
+	private Socket socket;
+	private ServerSocket serverSocket;
 	
 	public Connection(int port) {
 		this.port = port;
-		this.sender = null;
-		this.receiver = null;
+		this.socket = null;
+		this.serverSocket = null;
 	}
 	
 	/**
@@ -28,21 +28,21 @@ public class Connection {
 	 * @throws IOException
 	 */
 	public Connection connect() throws IOException {
-		receiver = new ServerSocket(port);
-		sender = receiver.accept();
+		serverSocket = new ServerSocket(port);
+		socket = serverSocket.accept();
 		return this;
 	}
 	
 	public boolean isConnected() {
-		return sender != null;
+		return socket != null;
 	}
 
-	public Socket getSender() {
-		return sender;
+	public Socket getSocket() {
+		return socket;
 	}
 
-	public ServerSocket getReciever() {
-		return receiver;
+	public ServerSocket getServerSocket() {
+		return serverSocket;
 	}
 	
 }

@@ -1,4 +1,4 @@
-package writer;
+package seg4145lab5_java.utils.writer;
 
 /**
  * Writes stuff... Somewhere.

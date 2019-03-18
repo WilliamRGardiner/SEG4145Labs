@@ -1,8 +1,8 @@
-package writer;
+package seg4145lab5_java.utils.writer;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import connection.Connection;
+import seg4145lab5_java.utils.connection.Connection;
 
 /**
  * Writes messages to Wifi.
@@ -23,7 +23,7 @@ public class WifiWriter implements Writer {
 	 * Initializes the stream.
 	 */
 	public WifiWriter init() throws IOException {
-		writer = new PrintWriter(connection.getSender().getOutputStream(), true);
+		writer = new PrintWriter(connection.getSocket().getOutputStream(), true);
 		return this;
 	}
 	
