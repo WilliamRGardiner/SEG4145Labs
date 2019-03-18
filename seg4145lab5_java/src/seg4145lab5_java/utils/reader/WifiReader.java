@@ -26,7 +26,13 @@ public class WifiReader implements Reader {
 	
 	@Override
 	public String read() throws IOException {
-		return reader.readLine();
+		char[] buffer = new char[20];
+		int size = reader.read(buffer);
+		char[] trimedBuffer = new char[size];
+		for(int i = 0; i < size; i++) {
+			trimedBuffer[i] = buffer[i];
+		}
+		return new String(trimedBuffer);
 	}
 
 }

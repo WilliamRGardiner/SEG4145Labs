@@ -11,6 +11,9 @@ import seg4145lab5_java.utils.connection.Connection;
 import seg4145lab5_java.view.ApplicationFrame;
 
 public class StingrayController {
+	
+	private static int PORT = 9876;
+	
 	private static ApplicationFrame view;
 	private static ApplicationController controller;
 	
@@ -27,7 +30,7 @@ public class StingrayController {
 		CommunicationUnit comms= null;
 		try {
 			model.pushToConsole("Waiting for connection...");
-			connection = new Connection(9876).connect();
+			connection = new Connection(PORT).connect();
 			comms = new WifiCommunicationUnit(connection);
 		} catch (IOException e) {
 			e.printStackTrace();
